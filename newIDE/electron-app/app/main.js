@@ -663,6 +663,12 @@ app.on('ready', function() {
 
   // npm script execution in external terminal (cross-platform)
   ipcMain.on('run-npm-script', (event, { projectPath, npmScript }) => {
+    if (!/^[a-zA-Z0-9_\-\./\\: ]+$/.test(projectPath)) {
+      throw new Error('Invalid input');
+    }
+    if (!/^[a-zA-Z0-9_\-\./\\: ]+$/.test(npmScript)) {
+      throw new Error('Invalid input');
+    }
     log.info(`Running npm script "${npmScript}" in ${projectPath}`);
 
     const platform = process.platform;
